@@ -27,7 +27,14 @@ def getTitle(url):
     return title
 
 #target = "http://www.pythonscraping.com/pages/page1.html"
-target = "http://www.pythonscraping.com/pages/warandpeace.html"
+#這個是最基本的網頁 有 h1 h2 body 等
+
+#target = "http://www.pythonscraping.com/pages/warandpeace.html"
+#這個是練其他 tag 像是 <span class="green"></span>
+
+target = "http://www.pythonscraping.com/pages/page3.html"
+
+
 """
 html = urlopen("http://www.pythonscraping.com/pages/page1.html")
 
@@ -48,5 +55,26 @@ for name in nameList:
     print(name.get_text())
     
 """
-print (bsObj.findAll({"h1", "h2", "h3", "h4", "h5", "h6"}))
+#print (bsObj)
 
+a = []
+b = []
+c = []
+
+for child in bsObj.find("table", {"id": "giftList"}).children:
+    #這 child 只有子代,所以只有物品的名稱
+    a.append(child)
+    print(child)
+
+
+
+for descendant in bsObj.find("table", {"id": "giftList"}).descendants:
+    #這 descendant 是子孫,除了物品,img 標籤 span 標籤 都會有
+    b.append(descendant)
+    print(descendant)
+    
+    
+for sibling in bsObj.find("table", {"id": "giftList"}).tr.next_siblings:
+    # 平輩
+    c.append(sibling)
+    print(sibling)
